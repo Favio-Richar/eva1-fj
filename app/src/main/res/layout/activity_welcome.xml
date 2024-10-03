@@ -11,10 +11,10 @@
         android:id="@+id/welcome_message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Bienvenido!"
+        android:text="Bienvenido"
         android:textSize="24sp"
         android:gravity="center"
-        android:textColor="@android:color/black"
+        android:textColor="@color/black"
         android:layout_marginBottom="24dp"/>
 
     <!-- Campo Nombre -->

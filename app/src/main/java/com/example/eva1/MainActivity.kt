@@ -9,9 +9,14 @@ import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var databaseHelper: DatabaseHelper
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        // Inicializar DatabaseHelper
+        databaseHelper = DatabaseHelper(this)
 
         // Referencias a los campos de texto y botones
         val usernameInput: EditText = findViewById(R.id.username_input)
@@ -25,10 +30,14 @@ class MainActivity : AppCompatActivity() {
             if (username.isEmpty() || password.isEmpty()) {
                 Toast.makeText(this, "Por favor, ingresa tanto el nombre de usuario como la contraseña", Toast.LENGTH_LONG).show()
             } else {
-                // Crear un Intent para iniciar la WelcomeActivity
-                val intent = Intent(this, WelcomeActivity::class.java)
-                intent.putExtra("USERNAME", username)
-                startActivity(intent)
+                // Validar el usuario en la base de datos
+                if (databaseHelper.checkUser(username, password)) {
+                    // Si el login es correcto, redirigir a MenuActivity
+                    val intent = Intent(this, MenuActivity::class.java)
+                    startActivity(intent)
+                } else {
+                    Toast.makeText(this, "Nombre de usuario o contraseña incorrectos", Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }
